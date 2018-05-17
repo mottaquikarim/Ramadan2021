@@ -5,6 +5,7 @@
 
 **[Access App Here](https://mottaquikarim.github.io/Ramadan2018/)**
 
+![screenshot](https://github.com/mottaquikarim/Ramadan2018/blob/master/app_screenshot.png?raw=true)
 
 ## Motivation
 
