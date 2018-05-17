@@ -92,6 +92,12 @@
         if (loc) {
             return loc;
         }
+        
+        const cityoverride = localStorage.getItem('city-override')
+        
+        if (cityoverride) {
+            return cityoverride;   
+        }
 
         return queryGeolocation();
     });
