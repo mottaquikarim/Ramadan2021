@@ -3,6 +3,8 @@
 
 *Simple Sehri/Iftar timetable consuming a prayer times API*
 
+**[Access App Here](https://mottaquikarim.github.io/Ramadan2018/)**
+
 
 ## Motivation
 
