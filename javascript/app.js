@@ -53,7 +53,7 @@
                     Please click <a href="./index.html" style="font-weight: bold;">here</a> to try again.
                 </p>
                 <p style="margin-bottom: 0; width: 70%;">
-                    Or, view data for <span class="js-nyc" style="font-weight: bold;">New York City, US</span>.
+                    Or, view data for <a href="#" class="js-nyc" style="font-weight: bold;">New York City, US</span>.
                 <p>
             </div>
         `
@@ -176,7 +176,9 @@
             init();
         }
         else if (e.target.matches('.js-nyc')) {
-            localStorage.setItem('city-override', 'nyc/usa')   
+            e.preventDefault();
+            localStorage.setItem('city-override', 'nyc/usa')
+            init();
         }
     });
 
