@@ -4,6 +4,7 @@ html, body {
     background-color: #17141F;
     max-width: 400px;
     margin: 0 auto;
+    overflow: auto;
 }
 
 /*
