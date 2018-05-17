@@ -1,0 +1,56 @@
+html, body {
+    height: 100%;
+    min-height: 100%;
+    background-color: #17141F;
+}
+
+/*
+ * bootstrap overrides
+ */
+.navbar-override.navbar {
+    background-color: rgba(0, 0, 0, 0.03) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+/*
+ * custom
+ */
+.app {
+    height: calc(100% - 76px);
+}
+
+.app-container {
+    color: white;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+
+    height: 100%;
+}
+
+.large-icon {
+    font-size: 30vh;
+}
+
+.large-icon--loop {
+    animation: rotate 5.5s linear infinite;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
