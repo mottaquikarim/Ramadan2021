@@ -103,12 +103,16 @@
     });
 
     const queryAPI = loc => new Promise((resolve, reject) => {
-        const [lat, lon] = loc.split(',');
+    
 
         const urlBase = 'https://ksw1yk85j7.execute-api.us-east-1.amazonaws.com/prod';
-        let endpoint = `location/${lat}/${lon}`;
+        let endpoint;
         if (localStorage.getItem('city-override')) {
             endpoint = `city/${localStorage.getItem('city-override')}`;
+        }
+        else {
+            const [lat, lon] = loc.split(',');
+            endpoint = `location/${lat}/${lon}`;
         }
         const args = `date=${Math.floor(now.getTime()/1000)}`;
 
