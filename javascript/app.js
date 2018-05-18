@@ -137,19 +137,19 @@
         <span>${getFormattedDate()}</span>
         <span class="js-right"><span class="oi oi-arrow-right text-info js-right"></span></span>
     </h3>
-    <div class="card text-white bg-primary" style="width: 90%;">
+    <div class="card text-white bg-primary" style="width: 90%;border-radius:0;">
         <div class="card-body time-container">
             <span>Sehri</span>
             <h4 class="card-title time-container__title">${fajr}</h4>
         </div>
     </div>
-    <div class="card text-white bg-primary" style="width: 90%;">
+    <div class="card text-white bg-primary" style="width: 90%;border-radius:0;">
         <div class="card-body time-container">
             <span>Sunrise</span>
             <h4 class="card-title time-container__title">${sunrise}</h4>
         </div>
     </div>
-    <div class="card text-white bg-primary" style="width: 90%;">
+    <div class="card text-white bg-primary" style="width: 90%;border-radius:0;">
         <div class="card-body time-container">
             <span>Iftaar</span>
             <h4 class="card-title time-container__title">${sunset}</h4>
