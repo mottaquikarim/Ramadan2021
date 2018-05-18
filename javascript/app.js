@@ -5,7 +5,11 @@
     const fillContainer = (markup) => {
         APP_EL.innerHTML = markup;
     }
+
+    // essentially, we want to store date object representing TODAY
+    // but not NOW. this is used as a key for caching responses in localstorage
     let now = new Date();
+    now = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     const getFormattedDate = () => {
         const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec",]
         const month = months[now.getMonth()]
@@ -103,9 +107,6 @@
     });
 
     const queryAPI = loc => new Promise((resolve, reject) => {
-    
-
-        const urlBase = 'https://ksw1yk85j7.execute-api.us-east-1.amazonaws.com/prod';
         let endpoint;
         if (localStorage.getItem('city-override')) {
             endpoint = `city/${localStorage.getItem('city-override')}`;
@@ -114,10 +115,21 @@
             const [lat, lon] = loc.split(',');
             endpoint = `location/${lat}/${lon}`;
         }
+
+        // if found in localstorage cache, use that instead
+        // TODO: periodically, localstorage should be cleared
+        const cachedData = localStorage.getItem(now.getTime()+'-'+endpoint)
+        if (cachedData) {
+            resolve(JSON.parse(cachedData))
+            return;
+        }
+
+        const urlBase = 'https://ksw1yk85j7.execute-api.us-east-1.amazonaws.com/prod';
         const args = `date=${Math.floor(now.getTime()/1000)}`;
 
         const xhr = new XMLHttpRequest();
         xhr.addEventListener("load", e => {
+            localStorage.setItem(now.getTime()+'-'+endpoint, e.target.responseText)
             resolve(JSON.parse(e.target.responseText))
         });
         xhr.addEventListener("error", e => {
@@ -201,6 +213,7 @@
             })
             .then(data => renderData(data))
             .catch(e => {
+                console.log(e)
                 fillContainer(templates.SOMETHING_WRONG);
             });
     }
