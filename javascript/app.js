@@ -240,7 +240,7 @@
         }
     });
 
-    fillContainer(templates.ALLOW_GEOLOCATION);
+    fillContainer(templates.LOAD_SVWORKER);
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('cache-worker.js')
       .then(function(registration) {
@@ -252,11 +252,19 @@
         init();
       });
 
+      const installTimeout = setTimeout(_ => {
+        console.log('timeout')
+        init();
+      }, 1000)
+
       navigator.serviceWorker.addEventListener('install', function(event) {
+        console.log('oninstall')
+        clearTimeout(installTimeout)
         init(); 
       });
     }
     else {
+        console.log('no svworker')
         init();
     }
 })();
