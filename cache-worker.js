@@ -1,9 +1,10 @@
-var CACHE_NAME = 'static-cache-v6';
+var CACHE_NAME = 'static-cache-v7';
 var urlsToCache = [
   '.',
   'index.html',
   'styles/app.css',
   'javascript/app.js',
+  'https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css',
 ];
 self.addEventListener('install', function(event) {
   event.waitUntil(
@@ -42,7 +43,7 @@ function fetchAndCache(url) {
   .catch(function(error) {
     console.log('Request failed:', error);
     // try again...
-    return fetch(event.request)
+    return fetch(url)
   });
 }
 self.addEventListener('activate', function(event) {
