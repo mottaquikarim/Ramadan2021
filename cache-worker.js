@@ -1,10 +1,9 @@
-var CACHE_NAME = 'static-cache-v1';
+var CACHE_NAME = 'static-cache-v3';
 var urlsToCache = [
   '.',
   'index.html',
   'styles/app.css',
   'javascript/app.js',
-  'https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css',
 ];
 self.addEventListener('install', function(event) {
   event.waitUntil(

@@ -21,6 +21,12 @@
     }
 
     const templates = {
+        LOAD_SVWORKER: `
+            <div class="app-container js-geo-perm">
+                <span class="oi oi-loop-circular large-icon large-icon--loop"></span>
+                <p style="margin-bottom: 0;">Loading Service worker...</p>
+            </div>
+        `,
         ALLOW_GEOLOCATION: `
             <div class="app-container js-geo-perm">
                 <span class="oi oi-loop-circular large-icon large-icon--loop"></span>
@@ -234,8 +240,7 @@
         }
     });
 
-    init();
-
+    fillContainer(templates.ALLOW_GEOLOCATION);
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('cache-worker.js')
       .then(function(registration) {
@@ -243,6 +248,15 @@
       })
       .catch(function(error) {
         console.log('Registration failed: ', error);
+        console.log('loading app anyways...')
+        init();
       });
+
+      navigator.serviceWorker.addEventListener('install', function(event) {
+        init(); 
+      });
+    }
+    else {
+        init();
     }
 })();
