@@ -144,10 +144,10 @@
         const {fajr, sunset, sunrise} = times;
         fillContainer(`
 <div class="app-container app-container--auto-height">
-    <h3 class="text-white btn btn-dark btn-lg" style="width: 90%; text-align: center; text-transform: uppercase; display: flex; justify-content: space-between;">
-        <span class="js-left"><span class="oi oi-arrow-left text-info js-left"></span></span>
+    <h3 class="text-white btn btn-dark btn-lg" style="width: 90%; text-align: center; text-transform: uppercase; display: flex; justify-content: space-between; align-items: center;">
+        <span class="js-left" style="padding: 10px; padding-left: 0;"><span class="oi oi-arrow-left text-info js-left"></span></span>
         <span>${getFormattedDate()}</span>
-        <span class="js-right"><span class="oi oi-arrow-right text-info js-right"></span></span>
+        <span class="js-right" style="padding: 10px; padding-right: 0;"><span class="oi oi-arrow-right text-info js-right"></span></span>
     </h3>
     <div class="card text-white bg-primary" style="width: 90%;border-radius:0;">
         <div class="card-body time-container">
@@ -219,7 +219,6 @@
     }
 
     APP_EL.addEventListener('click', e => {
-        console.log(e.target)
         if (e.target.matches('.js-left')) {
             now = new Date(now.getTime() - (1000*60*60*24));
             init();
