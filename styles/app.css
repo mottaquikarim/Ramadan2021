@@ -33,12 +33,25 @@ html, body {
     height: 100%;
 }
 
+.app-container--auto-height {
+    height:auto;
+}
+
 .large-icon {
     font-size: 30vh;
 }
 
 .large-icon--loop {
     animation: rotate 5.5s linear infinite;
+}
+
+.time-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.time-container__title {
+    margin-bottom: 0;
 }
 
 .footer {

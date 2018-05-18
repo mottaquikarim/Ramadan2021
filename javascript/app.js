@@ -131,28 +131,58 @@
         const times = data.data;
         const {fajr, sunset, sunrise} = times;
         fillContainer(`
-<div class="app-container">
+<div class="app-container app-container--auto-height">
     <h3 class="text-white btn btn-dark btn-lg" style="width: 90%; text-align: center; text-transform: uppercase; display: flex; justify-content: space-between;">
         <span class="js-left"><span class="oi oi-arrow-left text-info js-left"></span></span>
         <span>${getFormattedDate()}</span>
         <span class="js-right"><span class="oi oi-arrow-right text-info js-right"></span></span>
     </h3>
-    <div class="card text-white bg-dark" style="width: 90%;">
-        <div class="card-header">Sehri</div>
-        <div class="card-body">
-            <h1 class="card-title">${fajr}</h1>
+    <div class="card text-white bg-primary" style="width: 90%;">
+        <div class="card-body time-container">
+            <span>Sehri</span>
+            <h4 class="card-title time-container__title">${fajr}</h4>
+        </div>
+    </div>
+    <div class="card text-white bg-primary" style="width: 90%;">
+        <div class="card-body time-container">
+            <span>Sunrise</span>
+            <h4 class="card-title time-container__title">${sunrise}</h4>
+        </div>
+    </div>
+    <div class="card text-white bg-primary" style="width: 90%;">
+        <div class="card-body time-container">
+            <span>Iftaar</span>
+            <h4 class="card-title time-container__title">${sunset}</h4>
         </div>
     </div>
     <div class="card text-white bg-dark" style="width: 90%;">
-        <div class="card-header">Sunrise</div>
-        <div class="card-body">
-            <h1 class="card-title">${sunrise}</h1>
+        <div class="card-header time-container">
+            <span>Fajr</span>
+            <h6 class="card-title time-container__title">${times.fajr}</h6>
         </div>
     </div>
     <div class="card text-white bg-dark" style="width: 90%;">
-        <div class="card-header">Iftaar</div>
-        <div class="card-body">
-            <h1 class="card-title">${sunset}</h1>
+        <div class="card-header time-container">
+            <span>Zhuhr</span>
+            <h6 class="card-title time-container__title">${times.dhuhr}</h6>
+        </div>
+    </div>
+    <div class="card text-white bg-dark" style="width: 90%;">
+        <div class="card-header time-container">
+            <span>Asr</span>
+            <h6 class="card-title time-container__title">${times.asr}</h6>
+        </div>
+    </div>
+    <div class="card text-white bg-dark" style="width: 90%;">
+        <div class="card-header time-container">
+            <span>Maghrib</span>
+            <h6 class="card-title time-container__title">${times.maghrib}</h6>
+        </div>
+    </div>
+    <div class="card text-white bg-dark" style="width: 90%;">
+        <div class="card-header time-container">
+            <span>Isha</span>
+            <h6 class="card-title time-container__title">${times.isha}</h6>
         </div>
     </div>
 </div>
