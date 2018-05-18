@@ -52,6 +52,9 @@
                     Something went wrong!
                     Please click <a href="./index.html" style="font-weight: bold;">here</a> to try again.
                 </p>
+                <p style="margin-bottom: 0; width: 70%;">
+                    Or, view data for <a href="#" class="js-nyc" style="font-weight: bold;">New York City, US</span>.
+                <p>
             </div>
         `
     }
@@ -89,15 +92,28 @@
         if (loc) {
             return loc;
         }
+        
+        const cityoverride = localStorage.getItem('city-override')
+        
+        if (cityoverride) {
+            return cityoverride;   
+        }
 
         return queryGeolocation();
     });
 
     const queryAPI = loc => new Promise((resolve, reject) => {
-        const [lat, lon] = loc.split(',');
+    
 
         const urlBase = 'https://ksw1yk85j7.execute-api.us-east-1.amazonaws.com/prod';
-        const endpoint = `location/${lat}/${lon}`;
+        let endpoint;
+        if (localStorage.getItem('city-override')) {
+            endpoint = `city/${localStorage.getItem('city-override')}`;
+        }
+        else {
+            const [lat, lon] = loc.split(',');
+            endpoint = `location/${lat}/${lon}`;
+        }
         const args = `date=${Math.floor(now.getTime()/1000)}`;
 
         const xhr = new XMLHttpRequest();
@@ -167,6 +183,11 @@
         }
         else if (e.target.matches('.js-right')) {
             now = new Date(now.getTime() + (1000*60*60*24));
+            init();
+        }
+        else if (e.target.matches('.js-nyc')) {
+            e.preventDefault();
+            localStorage.setItem('city-override', 'nyc/usa')
             init();
         }
     });
