@@ -24,7 +24,7 @@
         LOAD_SVWORKER: `
             <div class="app-container js-geo-perm">
                 <span class="oi oi-loop-circular large-icon large-icon--loop"></span>
-                <p style="margin-bottom: 0;">Loading Service worker...</p>
+                <p style="margin-bottom: 0;width: 100%;text-align:center;">Loading Service worker...</p>
             </div>
         `,
         ALLOW_GEOLOCATION: `
