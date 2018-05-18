@@ -1,4 +1,4 @@
-var CACHE_NAME = 'static-cache-v5';
+var CACHE_NAME = 'static-cache-v6';
 var urlsToCache = [
   '.',
   'index.html',
@@ -41,7 +41,8 @@ function fetchAndCache(url) {
   })
   .catch(function(error) {
     console.log('Request failed:', error);
-    // You could return a custom offline 404 page here
+    // try again...
+    return fetch(event.request)
   });
 }
 self.addEventListener('activate', function(event) {
