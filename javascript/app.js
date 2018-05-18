@@ -261,6 +261,11 @@
                 }
             } )
         }
+        else {
+            console.log('already installed, running')
+            clearTimeout(installTimeout)
+            init();
+        }
       })
       .catch(function(error) {
         console.log('Registration failed: ', error);

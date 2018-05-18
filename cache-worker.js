@@ -1,4 +1,4 @@
-var CACHE_NAME = 'static-cache-v4';
+var CACHE_NAME = 'static-cache-v5';
 var urlsToCache = [
   '.',
   'index.html',
@@ -18,6 +18,10 @@ self.addEventListener('fetch', function(event) {
     caches.match(event.request)
     .then(function(response) {
       return response || fetchAndCache(event.request);
+    })
+    .catch(e => {
+        console.log('failed fetch', e)
+        return fetch(event.request)
     })
   );
 });
