@@ -238,7 +238,7 @@
     init();
 
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('javascript/svworker.js')
+      navigator.serviceWorker.register('cache-worker.js')
       .then(function(registration) {
         console.log('Registered:', registration);
       })
