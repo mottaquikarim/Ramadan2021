@@ -242,25 +242,30 @@
 
     fillContainer(templates.LOAD_SVWORKER);
     if ('serviceWorker' in navigator) {
+      const installTimeout = setTimeout(_ => {
+        console.log('timeout')
+        init();
+      }, 1500)
+
       navigator.serviceWorker.register('cache-worker.js')
-      .then(function(registration) {
-        console.log('Registered:', registration);
+      .then(function(success) {
+        console.log('Registered:', success);
+        console.log( 'scope', success.scope );
+        if ( success.installing ) {
+            let sw = success.installing;
+            sw.addEventListener( 'statechange', function ( event ) {
+                if ( event.target.state == 'installed' ) {
+                    console.log('oninstall')
+                    clearTimeout(installTimeout)
+                    init();
+                }
+            } )
+        }
       })
       .catch(function(error) {
         console.log('Registration failed: ', error);
         console.log('loading app anyways...')
         init();
-      });
-
-      const installTimeout = setTimeout(_ => {
-        console.log('timeout')
-        init();
-      }, 1000)
-
-      navigator.serviceWorker.addEventListener('install', function(event) {
-        console.log('oninstall')
-        clearTimeout(installTimeout)
-        init(); 
       });
     }
     else {
