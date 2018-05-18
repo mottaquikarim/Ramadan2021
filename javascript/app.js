@@ -236,4 +236,14 @@
     });
 
     init();
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('svworker.js')
+      .then(function(registration) {
+        console.log('Registered:', registration);
+      })
+      .catch(function(error) {
+        console.log('Registration failed: ', error);
+      });
+    }
 })();
