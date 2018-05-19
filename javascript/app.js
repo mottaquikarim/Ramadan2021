@@ -304,8 +304,7 @@
     window.addEventListener('online', e => offlineEl.style.display = 'none')
 
     fillContainer(templates.LOAD_SVWORKER);
-    if (false) {
-    //if ('serviceWorker' in navigator) {
+    if ('serviceWorker' in navigator) {
       const installTimeout = setTimeout(_ => {
         console.log('timeout')
         init();
