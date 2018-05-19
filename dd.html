@@ -78,13 +78,6 @@
             var dispatch = document.createEvent("HTMLEvents");
             dispatch.initEvent("click", true, true);
             b.dispatchEvent(dispatch);
-
-            const c = document.createElement('a')
-            c.innerHTML = `<div class="btn btn-info">Done</div>`
-            c.onclick = e => {
-                window.close();
-            }
-            document.querySelector('.js-cont').appendChild(c)
         }
     </script>
   </body>

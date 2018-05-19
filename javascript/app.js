@@ -231,7 +231,6 @@
 
         renderDataPromise
             .catch(e => {
-                console.log(e)
                 if (!navigator.onLine) {
                     fillContainer(templates.OFFLINE);
                 }
@@ -268,7 +267,6 @@
     }
 
     APP_EL.addEventListener('click', e => {
-        console.log(e.target)
         if (e.target.matches('.js-left')) {
             now = new Date(now.getTime() - (1000*60*60*24));
             init(false);
@@ -417,7 +415,7 @@
             nextDateObj = new Date(now.getTime() + (1000*60*60*24)*i)
             cachedData = _getCachedData(nextDateObj, endpoint);
             i++;
-            if (i > 10) break;
+            if (i > 30) break;
         }
         return events;
     })
