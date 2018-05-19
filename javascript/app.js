@@ -452,13 +452,14 @@ END:VCALENDAR`
 
             const a = document.createElement('a')
             a.innerHTML = `<div class="btn btn-success">Download Events</div>`
-            a.href = 'data:text/calendar;charset=utf-8,'+ encodeURIComponent(ICS)
-            a.download = 'events.ics'
+            a.href = 'dd.html#data:text/calendar;charset=utf-8,'+ encodeURIComponent(ICS)
+            //a.download = 'events.ics'
             for (let i = 0; i < _.parentNode.children.length; i++) {
                 const child = _.parentNode.children[i];
                 child.style.display = 'none';
             }
             _.parentNode.appendChild(a)
+            /*
             a.addEventListener('click', e => {
                 e.preventDefault();
 
@@ -474,6 +475,7 @@ END:VCALENDAR`
                 init();
                 document.body.removeChild(b)
             }, false);
+            */
         })
     }
 

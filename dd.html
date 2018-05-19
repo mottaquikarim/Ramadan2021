@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+  <head>
+    <title>RAMADAN2018</title>
+
+    <meta charset="UTF-8">
+    <meta name="author" content="Taq Karim">
+    <meta name="description" content="Sehri/Suhoor and iftar times for Ramadan 2018">
+    <meta name="keywords" content="Ramadan 2018, Ramadan 2018 times">
+
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="icon-precomposed.png" />
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.1/pulse/bootstrap.min.css" rel="stylesheet" integrity="sha384-w1P8UfRjdTYLTgdq8Y19zjdV25oYPMGNzwtm3tIyZ/gK8JPu+8ZW9OVkKhnBuydY" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles/app.css" type="text/css">
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-override">
+        <a class="navbar-brand" href="#">RAMADAN</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://github.com/mottaquikarim/Ramadan2018">About</a>
+                </li>
+            </ul>
+        </div>
+    </nav> 
+    <div class="js-offline-alert text-white btn btn-danger btn-sm" style="border-radius: 0;display:none;">
+        <strong style="margin-bottom: 0;">OFFLINE</strong>
+        <span style="display: block; width: 90%; text-align: center; margin: 0 auto;">Any previously loaded data is still available.</span>
+    </div>
+
+    <div class="app js-app">
+        <div class="app-container js-cont">
+            <span class="oi oi-loop-circular large-icon large-icon--loop"></span>
+            <p style="margin-bottom: 0;width: 100%;text-align:center;">Downloading Calendar Events...</p>
+        </div>
+    </div>
+
+    <div class="footer text-white btn btn-dark btn-sm" style="text-align: center; width: 100%;">
+        Built by your boy 
+        <a class="text-info" style="font-weight: bold;" href="https://medium.com/@the_taqquikarim" target="_blank">Taq Karim</a> with
+        <a class="text-info" style="font-weight: bold;" href="https://bootswatch.com/pulse/" target="_blank">this</a>, 
+        <a class="text-info" style="font-weight: bold;" href="https://useiconic.com/open/" target="_blank">this</a>, 
+        <a class="text-info" style="font-weight: bold;" href="https://ksw1yk85j7.execute-api.us-east-1.amazonaws.com/prod/city/nyc/usa?date=1526616000" target="_blank">this</a>, 
+        and <span style="color: red; font-weight: bold; font-size: 18px;">♥️</span>
+    </div>
+
+    <script>
+        const {hash} = window.location;
+        const d = hash.split('#').pop();
+
+        if (d) {
+            var b = document.createElement('a');
+            b.setAttribute("href", d);
+            b.setAttribute("download", "events.ics");
+            b.innerHTML = `<div class="btn btn-success">Download Events</div>`
+            document.querySelector('.js-cont').appendChild(b)
+
+            var dispatch = document.createEvent("HTMLEvents");
+            dispatch.initEvent("click", true, true);
+            b.dispatchEvent(dispatch);
+
+            window.close();
+        }
+    </script>
+  </body>
+</html>
