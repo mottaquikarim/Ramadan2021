@@ -290,7 +290,8 @@
     window.addEventListener('online', e => offlineEl.style.display = 'none')
 
     fillContainer(templates.LOAD_SVWORKER);
-    if ('serviceWorker' in navigator) {
+    if (false) {
+    //if ('serviceWorker' in navigator) {
       const installTimeout = setTimeout(_ => {
         console.log('timeout')
         init();
@@ -393,7 +394,7 @@
                     name = 'Iftar';
                 }
                 const diff = (nextDateObj.getTime() - START_RAMADAN.getTime()) / (1000*60*60*24);
-                name = "Day " + diff + ": " + name;
+                name = "Ramadan2018 Day " + diff + ": " + name;
                 _data.data[key] = {
                     name,
                     start: md.format("YYYYMMDDTHHmmss"),
@@ -459,14 +460,19 @@ END:VCALENDAR`
             }
             _.parentNode.appendChild(a)
             a.addEventListener('click', e => {
+                e.preventDefault();
+
                 var b = document.createElement('a');
                 b.setAttribute("href", 'data:text/calendar;charset=utf-8,'+ encodeURIComponent(ICS));
+                b.setAttribute('target', '_blank')
                 b.setAttribute("download", "events.ics");
+                document.body.appendChild(b)
 
                 var dispatch = document.createEvent("HTMLEvents");
                 dispatch.initEvent("click", true, true);
                 b.dispatchEvent(dispatch);
                 init();
+                document.body.removeChild(b)
             }, false);
         })
     }
