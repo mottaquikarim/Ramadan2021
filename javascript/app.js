@@ -395,7 +395,7 @@
                 const diff = (nextDateObj.getTime() - START_RAMADAN.getTime()) / (1000*60*60*24);
                 name = "Day " + diff + ": " + name;
                 _data.data[key] = {
-                    name: key,
+                    name,
                     start: md.format("YYYYMMDDTHHmmss"),
                     end: md.add(1, 'h').format("YYYYMMDDTHHmmss"),
                 }
@@ -458,7 +458,16 @@ END:VCALENDAR`
                 child.style.display = 'none';
             }
             _.parentNode.appendChild(a)
-            a.onclick = e => init();
+            a.addEventListener('click', e => {
+                var b = document.createElement('a');
+                b.setAttribute("href", 'data:text/calendar;charset=utf-8,'+ encodeURIComponent(ICS));
+                b.setAttribute("download", "events.ics");
+
+                var dispatch = document.createEvent("HTMLEvents");
+                dispatch.initEvent("click", true, true);
+                b.dispatchEvent(dispatch);
+                init();
+            }, false);
         })
     }
 
