@@ -1,4 +1,5 @@
 (() => { // protect the lemmings!
+    const START_RAMADAN = new Date(2018, 4, 16);
     const APP_ENTRY = '.js-app';
     const APP_EL = document.querySelector(APP_ENTRY);
     const fillContainer = markup => APP_EL.innerHTML = markup;
@@ -384,6 +385,15 @@
                 const md = moment(nextDateObj)
                 md.set('hour', hours)
                 md.set('minute', mins)
+                let name = key;
+                if (key === 'fajr') {
+                    name = 'Sehri';
+                }
+                else if (key === 'sunset') {
+                    name = 'Iftar';
+                }
+                const diff = (nextDateObj.getTime() - START_RAMADAN.getTime()) / (1000*60*60*24);
+                name = "Day " + diff + ": " + name;
                 _data.data[key] = {
                     name: key,
                     start: md.format("YYYYMMDDTHHmmss"),
