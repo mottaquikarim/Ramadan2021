@@ -1,4 +1,6 @@
 (() => { // protect the lemmings!
+    let isCacheFilled = false;
+
     const START_RAMADAN = new Date(2018, 4, 16);
     const APP_ENTRY = '.js-app';
     const APP_EL = document.querySelector(APP_ENTRY);
@@ -207,10 +209,10 @@
             <h6 class="card-title time-container__title">${times.isha}</h6>
         </div>
     </div>
-    <div class="card text-white bg-info js-add-to-cal" style="width: 90%; text-align: center;margin-bottom: 70px;">
-        <div class="card-header js-add-to-cal">
-            Add to Calendar
-        </div>
+    <div class="card text-white bg-info js-add-to-cal" style="width: 90%; text-align: center;margin-bottom: 70px; border-radius:0;">
+        <${isCacheFilled ? 'div' : 'button'} class="card-header js-add-to-cal" ${isCacheFilled ? '': 'disabled'} style="color: white;">
+             ${isCacheFilled ? "Add to Calendar" : '<span class="oi oi-loop-circular large-icon--loop"></span>'}
+        </${isCacheFilled ? 'div' : 'button'}>
     </div>
 </div>
         `);
@@ -241,7 +243,7 @@
 
         Promise.all([getLocationPromise, queryAPIPromise, renderDataPromise])
             .then(all => {
-                const [loc] = all
+                const [loc, data] = all
 
                 // #fireAndForget
                 if (look_forward) {
@@ -257,11 +259,14 @@
                             // making 20+ calls to lambda causes issues, buffering
                             // with a timeout
                             forward_queries.push(new Promise(resolve => {
-                                setTimeout(_ => resolve(), 500*i)
+                                setTimeout(_ => resolve(), 500 + 25*i)
                             }).then(_ => queryAPI(loc, nextDateObj)));
                         }
                     }
-                    Promise.all(forward_queries);
+                    Promise.all(forward_queries).then(_ => {
+                        isCacheFilled = true;
+                        renderData(data);
+                    });
                 }
             })
     }
@@ -461,11 +466,14 @@ END:VCALENDAR`
             localStorage.setItem('ics', 'data:text/calendar;charset=utf-8,'+ encodeURIComponent(ICS))
 
             var b = document.createElement('a');
-            b.setAttribute("href", 'dd.html');
+            // have to do this to catch data from PWA
+            b.setAttribute("href", 'dd.html#'+'data:text/calendar;charset=utf-8,'+ encodeURIComponent(ICS));
             document.body.appendChild(b)
             var dispatch = document.createEvent("HTMLEvents");
             dispatch.initEvent("click", true, true);
             b.dispatchEvent(dispatch);
+            // for chrome support :(
+            b.click();
             document.body.removeChild(b)
 
             init();
