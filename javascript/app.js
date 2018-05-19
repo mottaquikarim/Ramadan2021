@@ -450,6 +450,7 @@ END:VCALENDAR`
             const includePrayers = document.querySelector('#include-prayers').checked
             const ICS = buildICS(evts, alarm, includePrayers)
 
+            localStorage.setItem('ics', 'data:text/calendar;charset=utf-8,'+ encodeURIComponent(ICS))
             var b = document.createElement('a');
             b.setAttribute("href", 'https://mottaquikarim.github.io/Ramadan2018/dd.html#data:text/calendar;charset=utf-8,'+ encodeURIComponent(ICS));
             //b.setAttribute('target', '_blank')
