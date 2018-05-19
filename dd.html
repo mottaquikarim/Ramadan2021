@@ -71,6 +71,13 @@
             var dispatch = document.createEvent("HTMLEvents");
             dispatch.initEvent("click", true, true);
             b.dispatchEvent(dispatch);
+
+            const c = document.createElement('a')
+            c.innerHTML = `<div class="btn btn-info">Go Back</div>`
+            c.onclick = e => {
+                window.history.back()
+            }
+            document.querySelector('.js-cont').appendChild(c)
         }
     </script>
   </body>

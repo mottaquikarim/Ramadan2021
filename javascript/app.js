@@ -450,9 +450,22 @@ END:VCALENDAR`
             const includePrayers = document.querySelector('#include-prayers').checked
             const ICS = buildICS(evts, alarm, includePrayers)
 
+            var b = document.createElement('a');
+            b.setAttribute("href", 'https://mottaquikarim.github.io/Ramadan2018/dd.html#data:text/calendar;charset=utf-8,'+ encodeURIComponent(ICS));
+            //b.setAttribute('target', '_blank')
+            //b.setAttribute("download", "events.ics");
+            document.body.appendChild(b)
+
+            var dispatch = document.createEvent("HTMLEvents");
+            dispatch.initEvent("click", true, true);
+            b.dispatchEvent(dispatch);
+            init();
+            document.body.removeChild(b)
+
+            /*
             const a = document.createElement('a')
             a.innerHTML = `<div class="btn btn-success">Download Events</div>`
-            window.open('https://mottaquikarim.github.io/Ramadan2018/dd.html#data:text/calendar;charset=utf-8,'+ encodeURIComponent(ICS))
+            window.open()
             //a.target = "_blank"
             //a.download = 'events.ics'
             for (let i = 0; i < _.parentNode.children.length; i++) {
@@ -460,21 +473,9 @@ END:VCALENDAR`
                 child.style.display = 'none';
             }
             _.parentNode.appendChild(a)
-            /*
             a.addEventListener('click', e => {
                 e.preventDefault();
 
-                var b = document.createElement('a');
-                b.setAttribute("href", 'data:text/calendar;charset=utf-8,'+ encodeURIComponent(ICS));
-                b.setAttribute('target', '_blank')
-                b.setAttribute("download", "events.ics");
-                document.body.appendChild(b)
-
-                var dispatch = document.createEvent("HTMLEvents");
-                dispatch.initEvent("click", true, true);
-                b.dispatchEvent(dispatch);
-                init();
-                document.body.removeChild(b)
             }, false);
             */
         })
