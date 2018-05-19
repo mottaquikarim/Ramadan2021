@@ -19,10 +19,16 @@ The API, also developed by me, is currently deployed to AWS Lambda (it is not ye
 
 ## App
 
-This app uses the Geolocation API to attempt to calculate lat/lon coordinates of user. It will commit this value to localStorage for subsequent use. Given the lat/long, it connects to the API mentioned above and displays `fajr`, `sunrise` and `sunset` times. Additionally, there is support for looking forward and looking back in time.
+This app uses the Geolocation API to attempt to calculate lat/lon coordinates of user. It will commit this value to localStorage for subsequent use. Given the lat/long, it connects to the API mentioned above and displays `fajr`, `sunrise` and `sunset` times + prayer times for the day. Additionally, there is support for looking forward and looking back in time.
+
+Using service workers, there is robust support for offline access and viewing. On initial load, the app pulls in content for the next 3 days, which is available even offline in localstorage cache.
 
 ## To dos and future features
 
 * If lat/lon fails, display input for user to pass in city/country
 * Support ICS files / google events
 * Add test coverage
+
+## Attribution
+
+**[Icon](http://www.myiconfinder.com/icon/mosque-arab-arabia-islam-masjid-quran-muslim/18958#.512)** for homescreen.
