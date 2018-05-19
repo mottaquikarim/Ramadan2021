@@ -75,7 +75,7 @@
             const c = document.createElement('a')
             c.innerHTML = `<div class="btn btn-info">Go Back</div>`
             c.onclick = e => {
-                window.history.back()
+                history.go(-1)
             }
             document.querySelector('.js-cont').appendChild(c)
         }
