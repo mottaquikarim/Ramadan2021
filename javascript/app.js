@@ -113,19 +113,23 @@
         return queryGeolocation();
     });
 
-    const queryAPI = (loc, dateObj=now) => new Promise((resolve, reject) => {
-        let endpoint;
+    const _getEndpoint = loc => {
         if (localStorage.getItem('city-override')) {
-            endpoint = `city/${localStorage.getItem('city-override')}`;
+            return `city/${localStorage.getItem('city-override')}`;
         }
-        else {
-            const [lat, lon] = loc.split(',');
-            endpoint = `location/${lat}/${lon}`;
-        }
+
+        const [lat, lon] = loc.split(',');
+        return `location/${lat}/${lon}`;
+    }
+
+    const _getCachedData = (dateObj, endpoint) => localStorage.getItem(dateObj.getTime()+'-'+endpoint)
+
+    const queryAPI = (loc, dateObj=now) => new Promise((resolve, reject) => {
+        const endpoint = _getEndpoint(loc);
 
         // if found in localstorage cache, use that instead
         // TODO: periodically, localstorage should be cleared
-        const cachedData = localStorage.getItem(dateObj.getTime()+'-'+endpoint)
+        const cachedData = _getCachedData(dateObj, endpoint);
         if (cachedData) {
             resolve(JSON.parse(cachedData))
             return;
@@ -202,6 +206,11 @@
             <h6 class="card-title time-container__title">${times.isha}</h6>
         </div>
     </div>
+    <div class="card text-white bg-info js-add-to-cal" style="width: 90%; text-align: center;">
+        <div class="card-header js-add-to-cal">
+            Add to Calendar
+        </div>
+    </div>
 </div>
         `);
     }
@@ -247,6 +256,7 @@
     }
 
     APP_EL.addEventListener('click', e => {
+        console.log(e.target)
         if (e.target.matches('.js-left')) {
             now = new Date(now.getTime() - (1000*60*60*24));
             init(false);
@@ -259,6 +269,15 @@
             e.preventDefault();
             localStorage.setItem('city-override', 'nyc/usa')
             init();
+        }
+        else if (e.target.matches('.js-go-back')) {
+            init();
+        }
+        else if (e.target.matches('.js-gen-ics')) {
+            generateEvents(e.target);
+        }
+        else if (e.target.matches('.js-add-to-cal')) {
+            renderCal();
         }
     });
 
@@ -305,8 +324,132 @@
     }
     else {
         console.log('no svworker')
-        clearTimeout(installTimeout)
+        //clearTimeout(installTimeout)
         init();
+    }
+
+    const renderCal = _ => {
+        fillContainer(`<div class="app-container app-container--auto-height">
+<h3 class="text-white btn btn-dark btn-lg" style="width: 90%; text-align: center; text-transform: uppercase; display: flex; justify-content: center; align-items: center;">
+    <span>Calendar Options</span>
+</h3>
+<form style="width: 90%;">
+  <fieldset>
+    <div class="form-group form-row">
+        <label for="reminder">Remind me...</label>
+        <div class="input-group mb-3">
+            <select class="custom-select" id="reminder">
+                <option selected value="10">10</option>
+                <option value="30">30</option>
+                <option value="60">60</option>
+            </select>
+            <div class="input-group-append">
+                <label class="input-group-text" for="reminder">mins before</label>
+            </div>
+        </div>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="include-prayers">
+        <label class="form-check-label" for="include-prayers">
+            Include Prayer Times
+        </label>
+        <br/>
+        <br/>
+    </div>
+    <div class="form-group form-row">
+        <div class="btn btn-info col js-go-back">Go Back</div>
+        <div class="btn btn-success col js-gen-ics">Save</div>
+    </div>
+  </fieldset>
+</form>
+        </div>`);
+    }
+
+    const queryForData = _ => getLocation().then(loc => {
+        const endpoint = _getEndpoint(loc);
+        let nextDateObj = now;
+        let cachedData = _getCachedData(nextDateObj, endpoint);
+        let i = 1;
+        const events = [];
+        while (cachedData) {
+            const _data = JSON.parse(cachedData);
+            Object.keys(_data.data).forEach(key => {
+                const timestr = _data.data[key];
+                const bits = timestr.split(':')
+                const hr = bits[0];
+                const min = bits[1].slice(0,2)
+                const ampm = bits[1].slice(2);
+                const hours = parseInt(hr) + (ampm == 'pm' ? 12 : 0);
+                const mins = parseInt(min);
+                const md = moment(nextDateObj)
+                md.set('hour', hours)
+                md.set('minute', mins)
+                _data.data[key] = {
+                    name: key,
+                    start: md.format("YYYYMMDDTHHmmss"),
+                    end: md.add(1, 'h').format("YYYYMMDDTHHmmss"),
+                }
+            })
+            events.push(_data);
+
+            nextDateObj = new Date(now.getTime() + (1000*60*60*24)*i)
+            cachedData = _getCachedData(nextDateObj, endpoint);
+            i++;
+            if (i > 10) break;
+        }
+        return events;
+    })
+
+    const _buildAlarm = minuteValue => `BEGIN:VALARM
+TRIGGER:-PT${minuteValue}M
+DESCRIPTION:Reminder
+ACTION:DISPLAY
+END:VALARM`;
+
+    const _buildEvent = (evt, alarm) => `BEGIN:VEVENT
+SUMMARY:${evt.name}
+DTSTART:${evt.start}
+DTEND:${evt.end}
+STATUS:CONFIRMED
+SEQUENCE:3
+${alarm}
+END:VEVENT`;
+
+    const buildICS = (evts, alarm, includePrayers) => {
+        const alarmICS = _buildAlarm(alarm);
+        const events = evts.reduce((arr, evt) => {
+            const {data} = evt;
+            arr.push(_buildEvent(data.fajr, alarmICS))
+            arr.push(_buildEvent(data.sunset, alarmICS))
+            return arr;
+        }, []).join('\n');
+        
+    const wrapper = `BEGIN:VCALENDAR
+VERSION:2.0
+CALSCALE:GREGORIAN
+${events}
+END:VCALENDAR`
+
+        return wrapper;
+    }
+
+    const generateEvents = _ => {
+        queryForData().then(evts => {
+            const alarm = document.querySelector('#reminder').value;
+            const includePrayers = document.querySelector('#include-prayers').checked
+            const ICS = buildICS(evts, alarm, includePrayers)
+
+            const a = document.createElement('a')
+            a.innerHTML = `<div class="btn btn-success">Download Events</div>`
+            a.href = 'data:text/calendar;charset=utf-8,'+ encodeURIComponent(ICS)
+            a.download = 'events.ics'
+            for (let i = 0; i < _.parentNode.children.length; i++) {
+                const child = _.parentNode.children[i];
+                child.style.display = 'none';
+            }
+            _.parentNode.appendChild(a)
+            a.onclick = e => init();
+        })
     }
 
 })();
