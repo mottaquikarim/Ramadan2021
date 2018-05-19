@@ -59,15 +59,18 @@
 
     <script>
         const {hash} = window.location;
-        const d = hash.split('#').pop();
+        let d;
+        if (localStorage.getItem('ics')) {
+            d = localStorage.getItem('ics')
+        }
+        else {
+            d = hash.split('#').pop();
+        }
 
         if (d) {
-            if (localStorage.getItem('ics')) {
-                console.log(localStorage.getItem('ics'))
-            }
 
             var b = document.createElement('a');
-            b.setAttribute("href", localStorage.getItem('ics') || d);
+            b.setAttribute("href", d);
             b.setAttribute("download", "events.ics");
             b.innerHTML = `<div class="btn btn-success">Download Events</div>`
             document.querySelector('.js-cont').appendChild(b)
