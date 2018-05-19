@@ -1,5 +1,4 @@
 (() => { // protect the lemmings!
-
     const APP_ENTRY = '.js-app';
     const APP_EL = document.querySelector(APP_ENTRY);
     const fillContainer = markup => APP_EL.innerHTML = markup;
@@ -309,4 +308,5 @@
         clearTimeout(installTimeout)
         init();
     }
+
 })();
