@@ -207,7 +207,7 @@
             <h6 class="card-title time-container__title">${times.isha}</h6>
         </div>
     </div>
-    <div class="card text-white bg-info js-add-to-cal" style="width: 90%; text-align: center;">
+    <div class="card text-white bg-info js-add-to-cal" style="width: 90%; text-align: center;margin-bottom: 70px;">
         <div class="card-header js-add-to-cal">
             Add to Calendar
         </div>
