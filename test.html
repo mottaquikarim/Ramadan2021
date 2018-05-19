@@ -39,7 +39,7 @@
       var txt = document.getElementById('txt');
       txt.value = k + '';
       document.getElementById('link').onclick = function(code) {
-        this.href = 'data:text/calendar;charset=utf-8,'
+        this.href = 'blob:text/calendar;charset=utf-8,'
           + encodeURIComponent(txt.value);
       };
     };
