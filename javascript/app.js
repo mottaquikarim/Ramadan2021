@@ -453,7 +453,7 @@ END:VCALENDAR`
             const a = document.createElement('a')
             a.innerHTML = `<div class="btn btn-success">Download Events</div>`
             a.href = 'https://mottaquikarim.github.io/Ramadan2018/dd.html#data:text/calendar;charset=utf-8,'+ encodeURIComponent(ICS)
-            a.target = "_blank"
+            //a.target = "_blank"
             //a.download = 'events.ics'
             for (let i = 0; i < _.parentNode.children.length; i++) {
                 const child = _.parentNode.children[i];

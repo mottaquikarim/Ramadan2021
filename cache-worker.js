@@ -1,4 +1,4 @@
-var CACHE_NAME = 'static-cache-v15';
+var CACHE_NAME = 'static-cache-v16';
 var urlsToCache = [
   '.',
   'index.html',
