@@ -247,9 +247,20 @@
                 // #fireAndForget
                 if (look_forward) {
                     const forward_queries = []
-                    for (let i = 1; i < 4; i++) {
+                    const endRamadan = START_RAMADAN.getTime() + 30*(1000*60*60*24)
+                    const diff = Math.floor((endRamadan - now.getTime()) / (1000*60*60*24))
+                    for (let i = 1; i < diff; i++) {
                         const nextDateObj = new Date(now.getTime() + (1000*60*60*24)*i)
-                        forward_queries.push(queryAPI(loc, nextDateObj));
+                        if (i < 5) {
+                            forward_queries.push(queryAPI(loc, nextDateObj));
+                        }
+                        else {
+                            // making 20+ calls to lambda causes issues, buffering
+                            // with a timeout
+                            forward_queries.push(new Promise(resolve => {
+                                setTimeout(_ => resolve(), 500*i)
+                            }).then(_ => queryAPI(loc, nextDateObj)));
+                        }
                     }
                     Promise.all(forward_queries);
                 }
@@ -449,36 +460,17 @@ END:VCALENDAR`
             const alarm = document.querySelector('#reminder').value;
             const includePrayers = document.querySelector('#include-prayers').checked
             const ICS = buildICS(evts, alarm, includePrayers)
-
             localStorage.setItem('ics', 'data:text/calendar;charset=utf-8,'+ encodeURIComponent(ICS))
-            var b = document.createElement('a');
-            b.setAttribute("href", 'https://mottaquikarim.github.io/Ramadan2018/dd.html#data:text/calendar;charset=utf-8,'+ encodeURIComponent(ICS));
-            //b.setAttribute('target', '_blank')
-            //b.setAttribute("download", "events.ics");
-            document.body.appendChild(b)
 
+            var b = document.createElement('a');
+            b.setAttribute("href", 'dd.html');
+            document.body.appendChild(b)
             var dispatch = document.createEvent("HTMLEvents");
             dispatch.initEvent("click", true, true);
             b.dispatchEvent(dispatch);
-            init();
             document.body.removeChild(b)
 
-            /*
-            const a = document.createElement('a')
-            a.innerHTML = `<div class="btn btn-success">Download Events</div>`
-            window.open()
-            //a.target = "_blank"
-            //a.download = 'events.ics'
-            for (let i = 0; i < _.parentNode.children.length; i++) {
-                const child = _.parentNode.children[i];
-                child.style.display = 'none';
-            }
-            _.parentNode.appendChild(a)
-            a.addEventListener('click', e => {
-                e.preventDefault();
-
-            }, false);
-            */
+            init();
         })
     }
 
