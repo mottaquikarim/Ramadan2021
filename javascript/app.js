@@ -479,4 +479,88 @@ END:VCALENDAR`
         })
     }
 
+    const feedback = document.querySelector('.js-feedback')
+    const drawFeedbackData = () => {
+        feedback.innerHTML = `
+<div style="padding: 20px;overflow: auto;padding-bottom: 200px; height: 100%;">
+    <div class="btn btn-primary col js-close-feedback">
+        Close
+    </div>
+    <br/>
+    <br/>
+    <h4 style="color: white; text-align: center;">About</h4>
+    <p style="color: white;">
+    Sehri/iftaar times (when to start and stop fasting) during the month of Ramadan is usually distributed as an image of a table (typically, one googles "Ramadan times NYC" to track such resources down).
+    </p>
+    <p style="color: white;">
+    While exhaustive, it can be annoying to track down the proper times, especially if one is stuck in the subway without internet, for instance.
+    </p>
+    <p style="color: white;">
+    This app is an offline-accessible, persistent client for prayer, sehri, and iftaar times queried by time and space (ie, it tries to figure out where you are on earth and current time in order to pull relevant data). It can be added to the homescreen for easy access and also supports ICS downloading functionality.
+    </p>
+    <h4 style="color: white; text-align: center;">Feedback</h4>
+    <p style="color: white; text-align: center;">
+    (This will create an issue on Github)
+    </p>
+    <form>
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" id="title" placeholder="What's the issue?">
+            <small id="titlehelp" class="form-text text-muted">ie: clicking on button does not work</small>
+        </div>
+        <div class="form-group">
+            <label for="body">Feedback body</label>
+            <textarea class="form-control" id="body" rows="3" placeholder="How can we reproduce this issue?"></textarea>
+            <small id="bodyhelp" class="form-text text-muted">ie: Click into calendar then hit green button; nothing happens</small>
+        </div>
+        <div class="form-group">
+            <label for="contact">Contact</label>
+            <p class="text-white">Optionally, please leave contact info if we need clarification</p>
+            <input type="text" class="form-control" id="contact" placeholder="Your Twitter handle">
+        </div>
+        <button type="submit" class="btn btn-primary js-feedback-submit">Submit</button>
+    </form>
+</div>
+        `;
+    }
+    const hideFeedbackData = () => {
+        feedback.classList.remove('feedback-modal')
+        feedback.innerHTML = `<div class="btn btn-success col js-open-feedback">About / Feedback</div>`;
+    }
+    feedback.addEventListener('click', e => {
+        console.log(e.target)
+        if (e.target.matches('.js-close-feedback')) {
+            hideFeedbackData();
+        }
+        else if (e.target.matches('.js-open-feedback')) {
+            feedback.classList.add('feedback-modal')
+            drawFeedbackData();
+        }
+        else if (e.target.matches('.js-feedback-submit')) {
+            e.preventDefault();
+            const dataNodes = e.target.parentNode.querySelectorAll('input, textarea');
+            const data = Object.assign(...Array.from(dataNodes)
+                .map(node => ({[node.id]: node.value || node.innerHTML}))
+            )
+            if (!data['title'] || !data['body']) {
+                alert("Sorry, we need both Title AND Body to process feedback")
+            }
+            else {
+                const title = data['title'];
+                const body = data['body'] + ' Twitter handle: ' + data['contact']
+
+                const xhr = new XMLHttpRequest();
+                xhr.addEventListener("load", e => {
+                    console.log(JSON.parse(e.target.responseText))
+                    hideFeedbackData();
+                    alert('Thanks, feedback recorded!')
+                });
+                xhr.addEventListener("error", e => console.log(e))
+                xhr.open('GET', '')
+                xhr.open('POST', 'https://wt-taqqui_karim-gmail_com-0.sandbox.auth0-extend.com/ifttt-feedback');
+                xhr.send(`{"title":"${title}","body":"${body}"}`);
+            }
+        }
+    });
+
 })();
