@@ -9,6 +9,14 @@
 
 <img src="https://github.com/mottaquikarim/Ramadan2018/blob/master/screenshots/app_screenshot.png?raw=true" width="400px">
 
+## Table of Contents
+* **[Motivation](#motivation)**
+* **[App](#app)**
+* **[To dos and future features](#to-dos-and-future-features)**
+* **[Serverless](#serverless)
+* **[Screenshots](#screenshots)**
+* **[Attribution](#attribution)**
+
 ## Motivation
 
 Sehri/iftaar times (when to start and stop fasting) during the month of Ramadan is usually distributed as tables like [here](https://www.islamicfinder.org/ramadan-calendar/) and [here](https://www.google.com/search?q=ramadan+times+2018&source=lnms&tbm=isch&sa=X&ved=0ahUKEwiI_ffwlJLbAhXSuFkKHW-qBEYQ_AUICygC&biw=1440&bih=761).
@@ -40,6 +48,10 @@ To enable offline features, it is required that the app is loaded **once** over 
 * better / more granular ICS support
 * build tooling (**desperately** needed)
 * maybe convert into React...?
+
+# Serverless
+
+The implementation of the feedback submission feature requires the use of **[Webtask](https://webtask.io)** and IFTTT. In particular, the **[Maker Webhooks](https://ifttt.com/maker_webhooks)** feature of IFTTT is invoked when user submits feedback. This is hooked into IFTTT to create a new issue on Github as feedback is submitted. In order to satisfy CORS requirements and also protect Maker Webhook API Key, a webtask function is used as proxy - it simply sets the correct CORS headers and also hides the API Key in the *Secrets* management tool. The function that is currently deployed to webtask lives in the `serverless` folder and the key is called `iftttKey`.
 
 ## Screenshots
 
