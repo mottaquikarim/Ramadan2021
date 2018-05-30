@@ -13,7 +13,7 @@
 * **[Motivation](#motivation)**
 * **[App](#app)**
 * **[To dos and future features](#to-dos-and-future-features)**
-* **[Serverless](#serverless)
+* **[Serverless](#serverless)**
 * **[Screenshots](#screenshots)**
 * **[Attribution](#attribution)**
 
