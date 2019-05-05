@@ -138,7 +138,7 @@
             return;
         }
 
-        const urlBase = 'https://ksw1yk85j7.execute-api.us-east-1.amazonaws.com/prod';
+        const urlBase = 'https://8ldbpgh8mh.execute-api.us-east-1.amazonaws.com/prod';
         const args = `date=${Math.floor(dateObj.getTime()/1000)}`;
 
         const xhr = new XMLHttpRequest();

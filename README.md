@@ -25,7 +25,7 @@ While exhaustive, it can be annoying to track down the proper timee, esp if one 
 
 This app connects to an API built on top of a patched version of **[this project](http://praytimes.org/manual)** (I found a bug with scope in the python implementation, my patch has not yet been submitted upstream because I did not see any way to achieve this on the code manual. If anyone knows of a way to achieve this please make an issue!).
 
-The API, also developed by me, is currently deployed to AWS Lambda (and open sourced! Check it out **[here](https://github.com/mottaquikarim/PrayerApp)**!). It is available for consumption **[here](https://ksw1yk85j7.execute-api.us-east-1.amazonaws.com/prod/location/40.7128/-74.0059?date=1525343638)**. (**NOTE**: this app still runs on older version of this API, will switch over once the open sourced version reaches feature parity).
+The API, also developed by me, is currently deployed to AWS Lambda (and open sourced! Check it out **[here](https://github.com/mottaquikarim/PrayerApp)**!). It is available for consumption **[here](https://8ldbpgh8mh.execute-api.us-east-1.amazonaws.com/prod/location/40.7128/-74.0059?date=1525343638)**. (**NOTE**: this app still runs on older version of this API, will switch over once the open sourced version reaches feature parity).
 
 This app is an offline-accessible, persistent client for the API mentioned above. It can be added to the homescreen for easy access and also supports ICS downloading functionality.
 
