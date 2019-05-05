@@ -152,7 +152,7 @@
     });
 
     const renderData = data => {
-        const times = data.data;
+        const times = data;
         const {fajr, sunset, sunrise} = times;
         fillContainer(`
 <div class="app-container app-container--auto-height">
