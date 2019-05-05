@@ -118,7 +118,7 @@
 
     const _getEndpoint = loc => {
         if (localStorage.getItem('city-override')) {
-            return `city/${localStorage.getItem('city-override')}`;
+            return `location/${localStorage.getItem('city-override')}`;
         }
 
         const [lat, lon] = loc.split(',');
@@ -282,7 +282,7 @@
         }
         else if (e.target.matches('.js-nyc')) {
             e.preventDefault();
-            localStorage.setItem('city-override', 'nyc/usa')
+            localStorage.setItem('city-override', '40.7430251/-73.9418519')
             init();
         }
         else if (e.target.matches('.js-go-back')) {
