@@ -390,6 +390,7 @@
             const _data = JSON.parse(cachedData);
             if (!_data.data) { 
                 i++;
+                if (i > 30) break;
                 continue; 
             }
             Object.keys(_data.data).forEach(key => {
