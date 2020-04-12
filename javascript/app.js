@@ -388,6 +388,10 @@
         const events = [];
         while (cachedData) {
             const _data = JSON.parse(cachedData);
+            if (!_data) { 
+                i++;
+                continue; 
+            }
             Object.keys(_data.data).forEach(key => {
                 const timestr = _data.data[key];
                 const bits = timestr.split(':')
