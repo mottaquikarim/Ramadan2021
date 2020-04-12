@@ -388,7 +388,7 @@
         const events = [];
         while (cachedData) {
             const _data = JSON.parse(cachedData);
-            if (!_data) { 
+            if (!_data.data) { 
                 i++;
                 continue; 
             }
