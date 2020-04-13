@@ -45,6 +45,7 @@
         <div class="app-container js-cont">
             <span class="oi oi-loop-circular large-icon large-icon--loop"></span>
             <p style="margin-bottom: 0;width: 100%;text-align:center;">Downloading Calendar Events...</p>
+            <p style="margin-bottom: 0;width: 100%;text-align:center;">(👇 Download hasn't started? Click the button below👇)</p>
         </div>
     </div>
 
@@ -75,9 +76,11 @@
             b.innerHTML = `<div class="btn btn-success">Download Events</div>`
             document.querySelector('.js-cont').appendChild(b)
 
-            var dispatch = document.createEvent("HTMLEvents");
-            dispatch.initEvent("click", true, true);
-            b.dispatchEvent(dispatch);
+            var b = document.createElement('a');
+            b.setAttribute("href", '/');
+            b.innerHTML = `<div class="btn btn-primary">Go Back</div>`
+            document.querySelector('.js-cont').appendChild(b)
+
         }
     </script>
   </body>
