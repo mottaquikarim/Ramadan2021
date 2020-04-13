@@ -1,11 +1,11 @@
 <img src="https://github.com/mottaquikarim/Ramadan2018/blob/master/icon-precomposed.png?raw=true" width="128px">
 
-# Ramadan 2018
+# Ramadan 2020
 🎉🎈🎂🍾🎊🍻💃
 
 *Simple Sehri/Iftar timetable consuming a prayer times API*
 
-**[Access App Here](https://mottaquikarim.github.io/Ramadan2018/)**
+**[Access App Here](https://ramadan.link)**
 
 <img src="https://github.com/mottaquikarim/Ramadan2018/blob/master/screenshots/app_screenshot.png?raw=true" width="400px">
 
