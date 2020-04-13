@@ -1,7 +1,7 @@
 (() => { // protect the lemmings!
     let isCacheFilled = false;
 
-    const START_RAMADAN = new Date(2018, 4, 16);
+    const START_RAMADAN = new Date(2020, 3, 24);
     const APP_ENTRY = '.js-app';
     const APP_EL = document.querySelector(APP_ENTRY);
     const fillContainer = markup => APP_EL.innerHTML = markup;
@@ -388,13 +388,13 @@
         const events = [];
         while (cachedData) {
             const _data = JSON.parse(cachedData);
-            if (!_data.data) { 
+            if (!_data) { 
                 i++;
                 if (i > 30) break;
                 continue; 
             }
-            Object.keys(_data.data).forEach(key => {
-                const timestr = _data.data[key];
+            Object.keys(_data).forEach(key => {
+                const timestr = _data[key];
                 const bits = timestr.split(':')
                 const hr = bits[0];
                 const min = bits[1].slice(0,2)
@@ -411,9 +411,14 @@
                 else if (key === 'sunset') {
                     name = 'Iftar';
                 }
-                const diff = (nextDateObj.getTime() - START_RAMADAN.getTime()) / (1000*60*60*24);
-                name = "Ramadan2018 Day " + diff + ": " + name;
-                _data.data[key] = {
+                const diff = (nextDateObj.getTime() - START_RAMADAN.getTime()) / (1000*60*60*24) + 1;
+                if (diff > 0) {
+                    name = "Ramadan Day " + diff + ": " + name;
+                }
+                else {
+                    name = `${md.format('dddd')} (${-1*diff} ${(diff < -1) ? "days" : "day"} before Ramadan.)`
+                }
+                _data[key] = {
                     name,
                     start: md.format("YYYYMMDDTHHmmss"),
                     end: md.add(1, 'h').format("YYYYMMDDTHHmmss"),
@@ -447,7 +452,7 @@ END:VEVENT`;
     const buildICS = (evts, alarm, includePrayers) => {
         const alarmICS = _buildAlarm(alarm);
         const events = evts.reduce((arr, evt) => {
-            const {data} = evt;
+            const data = evt;
             arr.push(_buildEvent(data.fajr, alarmICS))
             arr.push(_buildEvent(data.sunset, alarmICS))
             return arr;
