@@ -1,6 +1,6 @@
 <img src="https://github.com/mottaquikarim/Ramadan2018/blob/master/icon-precomposed.png?raw=true" width="128px">
 
-# Ramadan 2020
+# Ramadan 2021
 🎉🎈🎂🍾🎊🍻💃
 
 *Simple Sehri/Iftar timetable consuming a prayer times API*
