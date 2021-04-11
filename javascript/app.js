@@ -1,7 +1,7 @@
 (() => { // protect the lemmings!
     let isCacheFilled = false;
 
-    const START_RAMADAN = new Date(2020, 3, 24);
+    const START_RAMADAN = new Date(2021, 3, 12);
     const APP_ENTRY = '.js-app';
     const APP_EL = document.querySelector(APP_ENTRY);
     const fillContainer = markup => APP_EL.innerHTML = markup;
